@@ -1,13 +1,7 @@
-import { QueryClient, QueryClientProvider } from 'react-query';
-
-const queryClient = new QueryClient();
+import { Write } from '@/components/Write';
 
 const App: React.VFC = () => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <div className="text-[22px] text-red-500">Hello World!</div>
-    </QueryClientProvider>
-  );
+  return <Write />;
 };
 
 export default App;
