@@ -12,31 +12,46 @@ export const Write: React.VFC = () => {
       beginY: number | null = null;
     let stopX, stopY;
 
-    if (canvas && ctx) {
-      ctx.fillStyle = '#fff';
-      ctx.fillRect(0, 0, canvasWidth, canvasHeight);
-      canvas.addEventListener('mousedown', (event) => {
-        event.preventDefault();
+    function onMouseDown(event: MouseEvent) {
+      event.preventDefault();
+      if (canvas && ctx) {
         ctx.beginPath();
         beginX = event.clientX - canvas.offsetLeft;
         beginY = event.clientY - canvas.offsetTop;
         ctx.moveTo(beginX, beginY);
-      });
-      canvas.addEventListener('mousemove', (event) => {
-        event.preventDefault();
+      }
+    }
+    function onMouseMove(event: MouseEvent) {
+      event.preventDefault();
+      if (canvas && ctx) {
         stopX = event.clientX - canvas.offsetLeft;
         stopY = event.clientY - canvas.offsetTop;
         if (beginX && beginY) {
           ctx.lineTo(stopX, stopY);
           ctx.stroke();
         }
-      });
-      canvas.addEventListener('mouseup', (event) => {
-        event.preventDefault();
-        beginX = null;
-        beginY = null;
-      });
+      }
     }
+    function onMouseUp(event: MouseEvent) {
+      event.preventDefault();
+      beginX = null;
+      beginY = null;
+    }
+
+    if (canvas && ctx) {
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+    }
+
+    canvas?.addEventListener('mousedown', onMouseDown);
+    canvas?.addEventListener('mousemove', onMouseMove);
+    canvas?.addEventListener('mouseup', onMouseUp);
+
+    return () => {
+      canvas?.removeEventListener('mousedown', onMouseDown);
+      canvas?.removeEventListener('mousemove', onMouseMove);
+      canvas?.removeEventListener('mouseup', onMouseUp);
+    };
   }, []);
 
   function onClearCanvas() {
