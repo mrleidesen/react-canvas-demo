@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
 
+import { saveCanvasToImage } from '@/utils';
+
 export const Write: React.VFC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasWidth = 384;
@@ -60,17 +62,7 @@ export const Write: React.VFC = () => {
   }
 
   function onDownload() {
-    const url = canvasRef.current?.toDataURL('image/jpeg', 1.0);
-    const img = new Image();
-    if (url) {
-      img.src = url;
-      img.onload = () => {
-        const a = document.createElement('a');
-        a.download = 'sign.jpg';
-        a.href = url;
-        a.click();
-      };
-    }
+    saveCanvasToImage(canvasRef.current, 'sign');
   }
 
   return (

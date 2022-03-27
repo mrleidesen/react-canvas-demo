@@ -1,7 +1,7 @@
-import { Write } from '@/components/Write';
+import { CustomAvatar } from '@/components/CustomAvatar';
 
 const App: React.VFC = () => {
-  return <Write />;
+  return <CustomAvatar />;
 };
 
 export default App;
